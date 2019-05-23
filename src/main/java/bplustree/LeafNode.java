@@ -140,7 +140,7 @@ public class LeafNode extends AbstractNode {
             remove(key);
         }else {
             //如果自身关键字小于L/2,找统一父节点下前/后节点借或者合并
-            if (isNodeSuit1(previous)){
+            if (isNodeSuitable1(previous,tree)){
                 int size = previous.getData().size();
                 Pair<Comparable, Object> pair = previous.getData().get(size - 1);
                 //前节点删除该数据,将该数据保存到当前节点
@@ -149,7 +149,7 @@ public class LeafNode extends AbstractNode {
                 data.add(0,pair);
                 //此时再删除key数据,不会影响b+树的平衡
                 remove(key);
-            }else if (isNodeSuit1(next)){
+            }else if (isNodeSuitable1(next,tree)){
                 Pair<Comparable, Object> pair = next.getData().get(0);
                 //next节点的关键字都大于当前节点;next节点删除该数据并放入当前节点的末尾
                 next.getData().remove(pair);
@@ -157,7 +157,7 @@ public class LeafNode extends AbstractNode {
                 remove(key);
             }else {
                 //此时只能合并前/后节点后再来执行删除操作保存树的平衡
-                if (isNodeSuit2(previous)){
+                if (isNodeSuitable2(previous,tree)){
                     //删除前节点以及其关联,前节点数据保存到当前节点
                     previous.getData().forEach(pair-> data.add(0,pair));
                     remove(key);
@@ -177,7 +177,7 @@ public class LeafNode extends AbstractNode {
                         previous.setNext(null);
                         previous = null;
                     }
-                }else if (isNodeSuit2(next)){
+                }else if (isNodeSuitable2(next,tree)){
                     //合并next节点
                     data.addAll(next.getData());
                     remove(key);
@@ -211,18 +211,6 @@ public class LeafNode extends AbstractNode {
                 .filter(e -> e.getKey().compareTo(key) == 0)
                 .findFirst();
         removeOption.ifPresent(pair -> data.remove(pair));
-    }
-
-    private boolean isNodeSuit1(LeafNode node){
-        return node!=null && node.getData().size()>limit/2
-                && node.getData().size()>2
-                && node.getParent() == parent;
-    }
-
-    private boolean isNodeSuit2(LeafNode node){
-        return node!=null && node.getParent() == parent
-                && (node.getData().size()<=limit/2
-                || node.getData().size()<=2);
     }
 
     /**
