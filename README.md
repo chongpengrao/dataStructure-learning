@@ -12,15 +12,23 @@
  思路:
  
  b+树有以下属性:
- *Filed:根节点,叶节点(叶节点链表头部),阶数m
- *Function:提供find,insertOrUpdate,remove等基本的增删改查方法
+ 
+ Filed:根节点,叶节点(叶节点链表头部),阶数m
+ 
+ Function:提供find,insertOrUpdate,remove等基本的增删改查方法
  
  节点:分为非叶节点Node,叶节点LeafNode
- *commom Field:父节点parent,是否根节点isRoot
- *common Function:find,insertOrUpdate,remove
+ 
+ commom Field:父节点parent,是否根节点isRoot
+ 
+ common Function:find,insertOrUpdate,remove
+ 
  叶节点存放数据:
-  *其他属性有:每片叶节点最多存放的数据个数L,存放的数据List
+ 
+  其他属性有:每片叶节点最多存放的数据个数L,存放的数据List
+  
  非叶节点存放索引:
-  *其他属性有:索引list,子节点List
+ 
+  其他属性有:索引list,子节点List
 
   
